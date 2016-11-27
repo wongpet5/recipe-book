@@ -24,5 +24,11 @@ export class ShoppingListService {
     this.items[this.items.indexOf(oldItem)] = newItem; 
   }
 
+  deleteItem(itemToDelete: Ingredient){
+    console.log("deleting item from shoppinglist");
+    const itemId = this.items.indexOf(itemToDelete);
+    this.items.splice(itemId, 1);
+  }
+
 }
 

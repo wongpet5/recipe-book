@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient'; 
 import { ShoppingListService } from './shopping-list.service';
 //import { NgForm } from '@angular/forms'
@@ -10,7 +10,7 @@ import { ShoppingListService } from './shopping-list.service';
 export class ShoppingListAddComponent implements OnChanges {
   isAdd = true; 
   @Input() item: Ingredient; 
-
+  @Output() cleared = new EventEmitter();
   constructor(private sls: ShoppingListService) {
 
   }
@@ -28,11 +28,23 @@ export class ShoppingListAddComponent implements OnChanges {
     const newIngredient = new Ingredient(ingredient.name, ingredient.amount);
     if (!this.isAdd){
       this.sls.editItems(this.item, newIngredient);
+      this.onClear();
     }
     else {
       this.item = newIngredient;
       this.sls.addItem(this.item);
     }
+  }
+
+  onDelete() {
+    console.log("onDelete event");
+    this.sls.deleteItem(this.item);
+    this.onClear(); 
+  }
+
+  onClear() {
+    this.isAdd = true; 
+    this.cleared.emit(null);
   }
 
 }
