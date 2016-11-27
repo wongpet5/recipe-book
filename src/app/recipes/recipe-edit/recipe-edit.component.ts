@@ -33,11 +33,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           this.recipe = null; 
         }
         console.log(this.isNew);
+        // Initialize the form 
+        this.initForm(); 
       }
     );
-
-    // Initialize the form 
-    this.initForm(); 
   }
 
   ngOnDestroy() {
